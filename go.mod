@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/cheggaaa/pb/v3 v3.1.0
+	github.com/go-sql-driver/mysql v1.8.1
 	github.com/hashicorp/go-retryablehttp v0.7.2
 	github.com/samber/lo v1.39.0
 	github.com/spf13/cobra v1.6.1
@@ -16,6 +17,7 @@ require (
 )
 
 require (
+	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/VividCortex/ewma v1.1.1 // indirect
 	github.com/andybalholm/cascadia v1.2.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect

@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"fmt"
+	"github.com/aquasecurity/trivy-java-db/pkg/types"
 	"log"
 	"os"
 	"path/filepath"
@@ -27,6 +29,11 @@ var (
 	cacheDir string
 	limit    int
 
+	// mysql config
+	dbConnectURL string
+	// sqlite config
+	dbPath string
+
 	rootCmd = &cobra.Command{
 		Use:   "trivy-java-db",
 		Short: "Build Java DB to store maven indexes",
@@ -42,7 +49,12 @@ var (
 		Use:   "build",
 		Short: "Build Java DB",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return build()
+			if dbPath != "" {
+				return build(&types.DBConfig{SqliteDBConfig: &types.SqliteDBConfig{DBPath: dbPath}})
+			} else if dbConnectURL != "" {
+				return build(&types.DBConfig{MysqlDBConfig: &types.MysqlDBConfig{DBConnectURL: dbConnectURL}})
+			}
+			return fmt.Errorf("must use --sqlite or --mysql")
 		},
 	}
 )
@@ -56,6 +68,16 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&cacheDir, "cache-dir", filepath.Join(userCacheDir, "trivy-java-db"),
 		"cache dir")
 	rootCmd.PersistentFlags().IntVar(&limit, "limit", 1000, "max parallelism")
+
+	buildCmd.Flags().Bool("mysql", false, "use mysql db")
+	buildCmd.Flags().StringVar(&dbConnectURL, "db-connect-url", "", "database connect url")
+	buildCmd.MarkFlagsRequiredTogether("mysql", "db-connect-url")
+
+	buildCmd.Flags().Bool("sqlite", false, "use sqlite db")
+	buildCmd.Flags().StringVar(&dbPath, "db-path", "", "database path")
+	buildCmd.MarkFlagsRequiredTogether("sqlite", "db-path")
+
+	buildCmd.MarkFlagsMutuallyExclusive("mysql", "sqlite")
 
 	rootCmd.AddCommand(crawlCmd)
 	rootCmd.AddCommand(buildCmd)
@@ -72,13 +94,13 @@ func crawl(ctx context.Context) error {
 	return nil
 }
 
-func build() error {
+func build(conf *types.DBConfig) error {
 	if err := db.Reset(cacheDir); err != nil {
 		return xerrors.Errorf("db reset error: %w", err)
 	}
 	dbDir := filepath.Join(cacheDir, "db")
 	log.Printf("Database path: %s", dbDir)
-	dbc, err := db.New(dbDir)
+	dbc, err := db.New(dbDir, conf)
 	if err != nil {
 		return xerrors.Errorf("db create error: %w", err)
 	}

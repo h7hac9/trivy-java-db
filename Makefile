@@ -9,7 +9,7 @@ test:
 build: trivy-java-db
 
 trivy-java-db: $(GO_SRCS)
-	go build $(LDFLAGS) ./cmd/trivy-java-db
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build $(LDFLAGS) ./cmd/trivy-java-db
 
 .PHONY: db-crawl
 db-crawl: trivy-java-db

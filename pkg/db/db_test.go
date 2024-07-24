@@ -7,8 +7,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/aquasecurity/trivy-java-db/pkg/dbtest"
-	"github.com/aquasecurity/trivy-java-db/pkg/types"
+	"github.com/h7hac9/trivy-java-db/pkg/dbtest"
+	"github.com/h7hac9/trivy-java-db/pkg/types"
 
 	_ "modernc.org/sqlite"
 )

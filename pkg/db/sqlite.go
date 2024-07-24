@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"encoding/hex"
 	"errors"
-	"github.com/aquasecurity/trivy-java-db/pkg/types"
+	"github.com/h7hac9/trivy-java-db/pkg/types"
 	"golang.org/x/xerrors"
 	"strings"
 )

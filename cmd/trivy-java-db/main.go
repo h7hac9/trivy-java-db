@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/aquasecurity/trivy-java-db/pkg/types"
+	"github.com/h7hac9/trivy-java-db/pkg/types"
 	"log"
 	"os"
 	"path/filepath"
@@ -11,9 +11,9 @@ import (
 	"github.com/spf13/cobra"
 	"golang.org/x/xerrors"
 
-	"github.com/aquasecurity/trivy-java-db/pkg/builder"
-	"github.com/aquasecurity/trivy-java-db/pkg/crawler"
-	"github.com/aquasecurity/trivy-java-db/pkg/db"
+	"github.com/h7hac9/trivy-java-db/pkg/builder"
+	"github.com/h7hac9/trivy-java-db/pkg/crawler"
+	"github.com/h7hac9/trivy-java-db/pkg/db"
 
 	_ "modernc.org/sqlite"
 )

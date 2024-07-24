@@ -1,12 +1,12 @@
 package dbtest
 
 import (
-	"github.com/aquasecurity/trivy-java-db/pkg/types"
+	"github.com/h7hac9/trivy-java-db/pkg/types"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/aquasecurity/trivy-java-db/pkg/db"
+	"github.com/h7hac9/trivy-java-db/pkg/db"
 )
 
 func InitDB(t *testing.T, indexes []types.Index) (db.DB, error) {
